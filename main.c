@@ -3,7 +3,8 @@
 
 int main(){
 	int menu;
-
+	int avgfriend = 0;
+	int avgtweet = 0;
 	while (1){
 		printf("0. Read data files\n");
 		printf("1. display statistics\n");
@@ -23,10 +24,12 @@ int main(){
 		int follownum = 0;
 		int userid[10000] = { 0 };
 		int useridcnt[10000] = { -1 };
+		int tweetcnt[10000] = { -1 };
 		int useridnum = 0;
+		int maxfriend, minfriend, maxtweet, mintweet;
 		switch (menu){
 		case 0: {
-			
+			printf("\n");
 			char arr[1000];
 			char *blk;
 
@@ -75,34 +78,56 @@ int main(){
 
 			while (fgets(arr, sizeof(arr), fp) != NULL){
 				if (!(arr[0] == ' ' || arr[0] == '\n')){
+					int tweetID = atoi(arr);
+					for (int i = 0; i < 10000; i++){
+						if (tweetID == userid[i]){
+							tweetcnt[i]++;
+							break;
+						}
+					}
 					fgets(arr, sizeof(arr), fp);
 					fgets(arr, sizeof(arr), fp);
-					int tweetword = arr;
+
+					if ((blk = strchr(arr, '\n')) != NULL) *blk = '\0';
 					tweetnum++;
 				}
 			}
 			printf("Total tweets : %d\n", tweetnum);
 			fclose(fp);
+
+			avgfriend = follownum / usernum;
+			avgtweet = tweetnum / usernum;
+
+			maxfriend = useridcnt[0];
+			minfriend = useridcnt[0];
+			for (int i = 1; i < 10000; i++){
+				if (useridcnt[i] > maxfriend) maxfriend = useridcnt[i];
+			}
+			for (int i = 1; i < 10000; i++){
+				if (useridcnt[i] != -1 && useridcnt[i] < minfriend) minfriend = useridcnt[i];
+			}
+			
+			maxtweet = tweetcnt[0];
+			mintweet = tweetcnt[0];
+			for (int i = 1; i < 10000; i++){
+				if (tweetcnt[i] > maxtweet) maxtweet = tweetcnt[i];
+			}
+			for (int i = 1; i < 10000; i++){
+				if (tweetcnt[i] != -1 && tweetcnt[i] < mintweet) mintweet = tweetcnt[i];
+			}
+			printf("\n");
 		
 		}
 		break;
 		case 1: {
-			int max, min;
-			max = useridcnt[0];
-			for (int i = 1; i < 10000; i++){
-				if (useridcnt[i] > max) max = useridcnt[i];
-			}
-			min = useridcnt[0];
-			for (int i = 1; i < 100; i++){
-				if (useridcnt[i] != -1 && useridcnt[i] < min) min = useridcnt[i];
-			}
-
-			printf("Average number of friends: %d", follownum / usernum);
-			printf("Minimum friends : %d\n", min);
-			printf("Maximum friends : %d\n", max);
 			printf("\n");
-		
-			
+			printf("Average number of friends: %d\n", avgfriend);
+			printf("Minimum friends : %d\n", minfriend + 1);
+			printf("Maximum friends : %d\n", maxfriend + 1);
+			printf("Average tweets per user : %d\n", avgtweet);
+			printf("Minimum tweets per user : %d\n", mintweet + 1);
+			printf("Maximum tweets per user : %d\n", maxtweet + 1);
+			printf("\n");
 		}
 		break;
 		}
