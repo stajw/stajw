@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <string.h>
+
 int main(){
 	int menu;
+
 	while (1){
 		printf("0. Read data files\n");
 		printf("1. display statistics\n");
@@ -15,11 +18,15 @@ int main(){
 		printf("99. Quit\n");
 		printf("Select Menu : ");
 		scanf("%d", &menu);
+		int usernum = 0;
+		int tweetnum = 0;
+		int follownum = 0;
+		int userid[10000] = { 0 };
+		int useridcnt[10000] = { -1 };
+		int useridnum = 0;
 		switch (menu){
 		case 0: {
-			int usernum = 0;
-			int tweetnum = 0;
-			int follownum = 0;
+			
 			char arr[1000];
 			char *blk;
 
@@ -28,6 +35,7 @@ int main(){
 			while (fgets(arr, sizeof(arr), fp) != NULL){
 				if (!(arr[0] == '\n' || arr[0] == ' ')){
 					int ID = atoi(arr);
+					userid[useridnum++] = ID;
 					fgets(arr, sizeof(arr), fp);
 					fgets(arr, sizeof(arr), fp);
 
@@ -42,9 +50,21 @@ int main(){
 
 			while (fgets(arr, sizeof(arr), fp) != NULL){
 				if (!(arr[0] == ' ' || arr[0] == '\n')){
-					int UserID = atoi(arr);
+					int firstID = atoi(arr);
+					for (int i = 0; i < 10000; i++){
+						if (firstID == userid[i]){
+							useridcnt[i]++;
+							break;
+						}
+					}
 					fgets(arr, sizeof(arr), fp);
-					int FollowID = atoi(arr);
+					int secondID = atoi(arr);
+					for (int i = 0; i < 10000; i++){
+						if (secondID == userid[i]){
+							useridcnt[i]++;
+							break;
+						}
+					}
 					follownum++;
 				}
 			}
@@ -65,6 +85,32 @@ int main(){
 			fclose(fp);
 		
 		}
+				break;
+		case 1: {
+			int temp, minfriend, maxfriend;
+			for (int i = 0; i < 9999; i++){
+				for (int j = i + 1; j < 10000; j++){
+					if (useridcnt[i] > useridcnt[j]){
+						temp = useridcnt[i];
+						useridcnt[i] = useridcnt[j];
+						useridcnt[j] = temp;
+
+					}
+				}
+			}
+			for (int i = 0; i < 10000; i++){
+				if (useridcnt[i] != -1) minfriend = useridcnt[i]+1;
+			}
+			// minfriend 구하기
+			maxfriend = useridcnt[9999] + 1;
+			printf("Average number of friends: %d", follownum / usernum);
+			printf("Minimum friends : %d\n", minfriend);
+			printf("Maximum friends : %d\n", maxfriend);
+			printf("\n");
+		
+			
+		}
+				break;
 		}
 	}
 	return 0;
