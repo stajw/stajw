@@ -14,5 +14,30 @@ int main(){
 	printf("99. Quit\n");
 	printf("Select Menu : ");
 	scanf("%d", &menu);
+	switch (menu){
+	case 0: {
+		int usernum = 0;
+		int tweetnum = 0;
+		int follownum = 0;
+		char arr[1000];
+		char *blk;
+
+		FILE *fp = fopen("C:\\ds\\user.txt", "r");
+
+		while (fgets(arr, sizeof(arr), fp) != NULL){
+			if (!(arr[0] == '\n' || arr[0] == ' ')){
+				int iID = atoi(arr);
+				printf("아이디 : %d\n", iID);
+				fgets(arr, sizeof(arr), fp);  //날짜는 생략
+				fgets(arr, sizeof(arr), fp);  //이름
+
+				if ((blk = strchr(arr, '\n')) != NULL) *blk = '\0';
+				usernum++;
+			}
+		}
+			printf("유저 수 : %d\n", usernum);
+			fclose(fp);
+	}
+	}
 	return 0;
 }
