@@ -21,7 +21,7 @@ int main(){
 		scanf("%d", &menu);
 		int usernum = 0;
 		int tweetnum = 0;
-		int follownum = 0;
+		int friendnum = 0;
 		int userid[10000] = { 0 };
 		int useridcnt[10000] = { -1 };
 		int tweetcnt[10000] = { -1 };
@@ -69,10 +69,10 @@ int main(){
 								break;
 							}
 						}
-						follownum++;
+						friendnum++;
 					}
 				}
-				printf("Total friendship records : %d\n", follownum);
+				printf("Total friendship records : %d\n", friendnum);
 				fclose(fp);
 
 				fp = fopen("C:\\ds\\word.txt", "r");
@@ -96,7 +96,7 @@ int main(){
 				printf("Total tweets : %d\n", tweetnum);
 				fclose(fp);
 
-				avgfriend = follownum / usernum;
+				avgfriend = friendnum / usernum;
 				avgtweet = tweetnum / usernum;
 
 				maxfriend = useridcnt[0];
