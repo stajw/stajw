@@ -1,6 +1,3 @@
-# stajw
-stajw's repository
-
 #include <stdio.h>
 int main(){
 printf("0. Read data files\n
