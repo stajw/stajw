@@ -27,8 +27,7 @@ int main(){
 
 			while (fgets(arr, sizeof(arr), fp) != NULL){
 				if (!(arr[0] == '\n' || arr[0] == ' ')){
-					int iID = atoi(arr);
-					printf("아이디 : %d\n", iID);
+					int ID = atoi(arr);
 					fgets(arr, sizeof(arr), fp);
 					fgets(arr, sizeof(arr), fp);
 
@@ -36,8 +35,35 @@ int main(){
 					usernum++;
 				}
 			}
-			printf("유저 수 : %d\n", usernum);
+			printf("total users : %d\n", usernum);
 			fclose(fp);
+		
+			fp = fopen("C:\\ds\\friend.txt", "r");
+
+			while (fgets(arr, sizeof(arr), fp) != NULL){
+				if (!(arr[0] == ' ' || arr[0] == '\n')){
+					int UserID = atoi(arr);
+					fgets(arr, sizeof(arr), fp);
+					int FollowID = atoi(arr);
+					follownum++;
+				}
+			}
+			printf("Total friendship records : %d\n", follownum);
+			fclose(fp);
+
+			fp = fopen("C:\\ds\\word.txt", "r");
+
+			while (fgets(arr, sizeof(arr), fp) != NULL){
+				if (!(arr[0] == ' ' || arr[0] == '\n')){
+					fgets(arr, sizeof(arr), fp);
+					fgets(arr, sizeof(arr), fp);
+					int tweetword = arr;
+					tweetnum++;
+				}
+			}
+			printf("Total tweets : %d\n", tweetnum);
+			fclose(fp);
+		
 		}
 		}
 	}
