@@ -96,8 +96,8 @@ int main(){
 			printf("Total tweets : %d\n", tweetnum);
 			fclose(fp);
 
-			avgfriend = (friendnum*2) / usernum;
-			avgtweet = tweetnum / usernum;
+			avgfriend = (int)(((float)(friendnum*2) / usernum)+0.5);
+			avgtweet = (int)(((float)tweetnum / usernum)+0.5);
 
 			maxfriend = useridcnt[0];
 			minfriend = useridcnt[0];
