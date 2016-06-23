@@ -85,32 +85,26 @@ int main(){
 			fclose(fp);
 		
 		}
-				break;
+		break;
 		case 1: {
-			int temp, minfriend, maxfriend;
-			for (int i = 0; i < 9999; i++){
-				for (int j = i + 1; j < 10000; j++){
-					if (useridcnt[i] > useridcnt[j]){
-						temp = useridcnt[i];
-						useridcnt[i] = useridcnt[j];
-						useridcnt[j] = temp;
+			int max, min;
+			max = useridcnt[0];
+			for (int i = 1; i < 10000; i++){
+				if (useridcnt[i] > max) max = useridcnt[i];
+			}
+			min = useridcnt[0];
+			for (int i = 1; i < 100; i++){
+				if (useridcnt[i] != -1 && useridcnt[i] < min) min = useridcnt[i];
+			}
 
-					}
-				}
-			}
-			for (int i = 0; i < 10000; i++){
-				if (useridcnt[i] != -1) minfriend = useridcnt[i]+1;
-			}
-			// minfriend 구하기
-			maxfriend = useridcnt[9999] + 1;
 			printf("Average number of friends: %d", follownum / usernum);
-			printf("Minimum friends : %d\n", minfriend);
-			printf("Maximum friends : %d\n", maxfriend);
+			printf("Minimum friends : %d\n", min);
+			printf("Maximum friends : %d\n", max);
 			printf("\n");
 		
 			
 		}
-				break;
+		break;
 		}
 	}
 	return 0;
