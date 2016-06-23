@@ -29,8 +29,8 @@ int main(){
 				if (!(arr[0] == '\n' || arr[0] == ' ')){
 					int iID = atoi(arr);
 					printf("아이디 : %d\n", iID);
-					fgets(arr, sizeof(arr), fp);  //날짜는 생략
-					fgets(arr, sizeof(arr), fp);  //이름
+					fgets(arr, sizeof(arr), fp);
+					fgets(arr, sizeof(arr), fp);
 
 					if ((blk = strchr(arr, '\n')) != NULL) *blk = '\0';
 					usernum++;
