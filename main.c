@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
 
 int main(){
+	int k = 0;
+	int det = 0;
 	int menu;
 	int avgfriend = 0;
 	int avgtweet = 0;
 	int mosttweetuser[5] = { 0 };
+	wchar_t mosttweetword[5] = { 0 };
 	do{
 		printf("0. Read data files\n");
 		printf("1. display statistics\n");
@@ -26,6 +30,8 @@ int main(){
 		int userid[10000] = { 0 };
 		int useridcnt[10000] = { 0 };
 		int tweetcnt[10000] = { 0 };
+		wchar_t tweet[100000] = { '\0' };
+		int tweetwordnum[100000] = { 0 };
 		int useridnum = 0;
 		int maxfriend, minfriend, maxtweet, mintweet;
 
@@ -88,6 +94,20 @@ int main(){
 					}
 					fgets(arr, sizeof(arr), fp);
 					fgets(arr, sizeof(arr), fp);
+					
+					for (int i = 0; i < 100000; i++){
+						if (tweet[i] == arr){
+							tweetwordnum[i]++;
+							det = 1;
+							break;
+						}
+					}
+
+					if (det == 0){
+						tweet[k] = arr;
+						tweetwordnum[k]++;
+						k++;
+					}
 
 					if ((blk = strchr(arr, '\n')) != NULL) *blk = '\0';
 					tweetnum++;
@@ -122,7 +142,7 @@ int main(){
 					if (tweetcnt[i] < tweetcnt[j]){
 						int u = tweetcnt[i];
 						tweetcnt[i] = tweetcnt[j];
-						tweetcnt[j] = i;
+						tweetcnt[j] = u;
 						int x = userid[i];
 						userid[i] = userid[j];
 						userid[j] = x;
@@ -131,6 +151,21 @@ int main(){
 			}
 			
 			for (int i = 0; i < 5; i++) mosttweetuser[i] = userid[i];
+
+			for (int i = 0; i < tweetnum - 1; i++){
+				for (int j = i + 1; j < tweetnum; j++){
+					if (tweetwordnum[i] < tweetwordnum[j]){
+						int z = tweetwordnum[i];
+						tweetwordnum[i] = tweetwordnum[j];
+						tweetwordnum[j] = z;
+						char ch = tweet[i];
+						tweet[i] = tweet[j];
+						tweet[j] = ch;
+					}
+				}
+			}
+
+			for (int i = 0; i < 5; i++) mosttweetword[i] = tweet[i];
 
 			printf("\n");
 
@@ -144,6 +179,15 @@ int main(){
 			printf("Average tweets per user : %d\n", avgtweet);
 			printf("Minimum tweets per user : %d\n", mintweet);
 			printf("Maximum tweets per user : %d\n", maxtweet);
+			printf("\n");
+		}
+				break;
+		case 2: {
+			printf("\n");
+			printf("Top 5 most tweeted words\n");
+			for (int i = 0; i < 5; i++){
+				printf("%d. %c\n", i + 1, mosttweetword[i]);
+			}
 			printf("\n");
 		}
 				break;
