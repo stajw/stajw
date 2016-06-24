@@ -94,20 +94,7 @@ int main(){
 					}
 					fgets(arr, sizeof(arr), fp);
 					fgets(arr, sizeof(arr), fp);
-					
-					for (int i = 0; i < 100000; i++){
-						if (tweet[i] == arr){
-							tweetwordnum[i]++;
-							det = 1;
-							break;
-						}
-					}
 
-					if (det == 0){
-						tweet[k] = arr;
-						tweetwordnum[k]++;
-						k++;
-					}
 
 					if ((blk = strchr(arr, '\n')) != NULL) *blk = '\0';
 					tweetnum++;
@@ -149,7 +136,7 @@ int main(){
 					}
 				}
 			}
-			
+
 			for (int i = 0; i < 5; i++) mosttweetuser[i] = userid[i];
 
 			for (int i = 0; i < tweetnum - 1; i++){
