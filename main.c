@@ -5,6 +5,7 @@ int main(){
 	int menu;
 	int avgfriend = 0;
 	int avgtweet = 0;
+	int mosttweetuser[5] = { 0 };
 	do{
 		printf("0. Read data files\n");
 		printf("1. display statistics\n");
@@ -115,6 +116,22 @@ int main(){
 			for (int i = 1; i < usernum; i++){
 				if (tweetcnt[i] < mintweet) mintweet = tweetcnt[i];
 			}
+
+			for (int i = 0; i < usernum - 1; i++){
+				for (int j = i + 1; j < usernum; j++){
+					if (tweetcnt[i] < tweetcnt[j]){
+						int u = tweetcnt[i];
+						tweetcnt[i] = tweetcnt[j];
+						tweetcnt[j] = i;
+						int x = userid[i];
+						userid[i] = userid[j];
+						userid[j] = x;
+					}
+				}
+			}
+			
+			for (int i = 0; i < 5; i++) mosttweetuser[i] = userid[i];
+
 			printf("\n");
 
 		}
@@ -127,6 +144,15 @@ int main(){
 			printf("Average tweets per user : %d\n", avgtweet);
 			printf("Minimum tweets per user : %d\n", mintweet);
 			printf("Maximum tweets per user : %d\n", maxtweet);
+			printf("\n");
+		}
+				break;
+		case 3: {
+			printf("\n");
+			printf("Top 5 most tweeted users\n");
+			for (int i = 0; i < 5; i++){
+				printf("%d. %d\n", i + 1, mosttweetuser[i]);
+			}
 			printf("\n");
 		}
 				break;
