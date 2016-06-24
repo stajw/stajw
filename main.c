@@ -57,7 +57,6 @@ int main(){
 					int firstID = atoi(arr);
 					for (int i = 0; i < 10000; i++){
 						if (firstID == userid[i]){
-							useridcnt[i]++;
 							break;
 						}
 					}
@@ -96,8 +95,8 @@ int main(){
 			printf("Total tweets : %d\n", tweetnum);
 			fclose(fp);
 
-			avgfriend = (int)(((float)(friendnum*2) / usernum)+0.5);
-			avgtweet = (int)(((float)tweetnum / usernum)+0.5);
+			avgfriend = (int)(((float)friendnum / usernum) + 0.5);
+			avgtweet = (int)(((float)tweetnum / usernum) + 0.5);
 
 			maxfriend = useridcnt[0];
 			minfriend = useridcnt[0];
